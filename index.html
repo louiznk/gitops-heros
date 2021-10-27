@@ -1,0 +1,646 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+		<title>Le GitOps dont vous êtes le héros</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+		<!-- Fixme mettre au centre le header -->
+		<style>
+			body, .reveal {
+				background-image: url(images/slide-background.png);
+				background-size: auto 100%;
+				background-repeat: no-repeat;
+			}
+			.reveal li {
+				font-size: 0.9em;
+			}
+
+			.reveal table th, .reveal table td {
+				border-bottom: none;
+			}
+
+			.left {
+				text-align: left;
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+
+			.right {
+				text-align: right;
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+
+			
+
+
+			.avatar {
+				min-width: 7em;
+			}
+			.header {				
+				padding: 10px;
+				text-align: center;
+				font-size: 66%;
+			}
+			.header-inner {				
+				display: inline-block;
+				padding: 10px;
+			}
+			.small {
+				font-size: 0.8em;
+			}
+			.img-rounded {
+  				border-radius: 50%;
+			}
+			.reveal .aligncenter {
+				margin: 10px auto 20px;
+    			display: block;
+			}
+			.hide {
+				display: none;
+				visibility: hidden;
+			}
+			.show {
+				visibility: visible;
+			}
+			.finish {
+				color: red;
+				font-weight: bold;
+				font-size:24px;
+			}
+			.alerte {
+				color: red;
+				font-weight: bold;
+			}
+			.warning {
+				color: coral;
+			}
+			.lvl-up {
+				position: absolute;
+				box-sizing: border-box;
+				top: 20%;
+				left: 50%;
+				text-align: center;
+				transform: translate(-50%, -50%);
+				font-size: 200%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="header">
+				<div id="timer" class="header-inner">⏳...</div>
+				<div id="label-container" class="header-inner"></div>
+			</div>
+			<div class="slides">
+
+				<div id="label-level" class="lvl-up hide">🆙</div>
+
+				<!-- 0 -->
+				<section>
+					<h1>Le GitOps dont vous êtes le héros</h1><br/ >
+					<img src="images/jdr.png" /><br>
+					Une collection Folio DevOps
+					
+					<p class="small">
+					Code et présentation <br/ > ...
+					</p>
+					
+					<aside class="notes">
+						
+					</aside>
+				</section>
+				<!-- 1 -->
+				<section>
+					<img src="images/twitter.png" style="margin: 0;" /><span style="font-size: 1.2em;"> @_louidji</span>
+					<table class="small">
+						<tbody>
+							<tr>
+								<td><img src="images/louis.png" class="img-rounded aligncenter avatar"/></td>
+							</tr>
+							<tr>
+								<td>Louis Tournayre @ Zenika Lyon</td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<aside class="notes">
+					</aside>
+				</section>
+				<!-- 2 -->
+				<section>
+					<h3>Notre histoire commence par une crise...</h3>
+					<img src="images/404.png" />
+					<br />
+					Il était une fois une application que nous appelerons <b>le site</b> (et pas le sith)<br />
+					<br />
+					Mais ce site est défectueux, les utilisateurs ne sont pas contents, la direction est inquiète...<br />
+					
+					<aside class="notes">
+						Et pire que tout on a déjà déployer le thème d'halloween après halloween, on a pas le droit de faire pareil pour le thème de Noël.<br />
+						C'est la crise !
+						<br/ >
+						La direction attends des idées et propositions pour améliorer les choses
+					</aside>
+				</section>
+
+				<!-- 3 -->
+				<section>
+					<!-- 3.0 -->
+					<section data-background-image="images/tarot-divinatoire.png" data-background-size="65%">
+						<h3>Table ronde des équipes</h3>
+						Scéance brainstorming des différentes équipes pour trouver des solutions.
+						<aside class="notes">
+							Ayant déjà épuisé la pseudo solution de la recherche du coupable on essaye autre chose.
+						</aside>
+					</section>
+					<!-- 3.1 -->
+					<section>
+						<h3>💡 Comment avoir moins de bugs ?</h3>
+						<br />
+						<p>
+							<ul>
+								<li>Des livraison avec moins de choses</li>
+								<li>Du temps pour effacer la dette technique</li>
+							</ul>
+						</p>
+						<p>
+							Pour que ce soit le plus efficient il faut que les déployements soient un non évenements.
+						</p>
+						<aside class="notes">
+							Coté dev & projet
+						</aside>
+					</section>
+					<!-- 3.2 -->
+					<section>
+						<h3>💡 Comment rendre les déploiements ?</h3>
+						<br />
+						<p>
+							Fiable, Rapides, Automatisés, 🎁 ...<br />
+							Il faut revoir le processus de mise en production 😰<br />
+						</p>
+						<br />
+						<p>
+							Chercher des idées :
+							<ul>
+								<li><a href="#/4/1">Discuter avec des amis à la machine à café ☕ (ou la taverne)</a></li>
+								<li><a href="#/4/2">Chez mon ami google</a></li>
+							</ul>
+						</p>
+						<aside class="notes">
+							Faut que j'aille trouver l'inspiration
+						</aside>
+					</section>
+				</section>
+				
+				<!-- 4 -->
+				<section>
+					<!-- 4.0 -->
+					<section>
+						<h3>Perdu ?</h3>
+						Vous n'avez rien à faire là
+						
+						<aside class="notes">
+						</aside>
+					</section>
+					<!-- 4.1 -->
+					<section data-background-image="images/tavern.png" data-background-size="80%">
+						<h3>La taverne</h3>
+						<br />
+						<p>
+						Vous rencontrez vos amis Merlin et Gimli au ☕.
+						Ils vous propose la solution suivante :
+						</p>
+						<ul>
+							<li>Packager et distribuer l'application via des images docker</li>
+							<li>Et le déployer dans kubernetes en utilisant les principes <b>GitOps</b></li>
+						</ul>
+						<br />
+						<br />
+						Mais c'est quoi <b>GitOps</b> ?...<br />
+						Pour en savoir plus <a href="#/5">rendez-vous au meetup du coin</a>
+						
+						<aside class="notes">
+							(En faite c'est la salle café/thé/... en fonction de l'heure)
+							Et comment on passe d'une image dans un repository à une application dans kube de manière fiable, rapides et automatisés
+							? <br />
+							Là le mot GitOps est laché<br /> 
+							Besoin d'apprendre, de s'entrainer ?
+						</aside>
+					</section>
+					<!-- 4.2 -->
+					<section>
+						<h3>Let Me Google That</h3>
+						<img src="images/google.png" /> <br />
+						Trop de pistes... se rendre <a href="#/4/1">à la taverne</a>
+						<aside class="notes">
+							Dont au moins une de trop...
+						</aside>
+					</section>					
+				</section>
+
+				<!-- 5 -->
+				<section data-background-image="images/richardson-kubecon-2.png" data-background-size="60%">
+					<section>
+						<h3>Une présentation sur GitOps au GDG Lille</h3>
+						Après le meetup vous croisez Legolas et discuter avec lui.
+						<aside class="notes">
+							Il vous pose quelques questions pour vous aider à comprendre GitOps
+						</aside>
+					</section>
+					<section>
+						<h3>GitOps c'est quoi pour vous ?</h3>
+						<ul>
+							<li><a href="javascript:void(0)" onclick="resolveAndGo('#/5/3', 1, 1)">A: Un plat réchauffé</a></li>
+							<li><a href="#/5/2">B: Un truc révolutionnaire</a></li>
+							<li><a href="#/5/2">C: Une nouvelle destination pour vos vacances</a></li>
+							<li><a href="#/5/2">D: Un nouveau framework web</a></li>
+						</ul>
+						<aside class="notes">
+						
+						</aside>
+					</section>
+					<section>
+						<h3>Fail</h3>
+						<br />
+						<a href="#/6">Aller à l'épreuve 2</a>
+						<aside class="notes">
+						GitOps n'a rien de nouveau, les objectifs et principes mis en œuvre dans GitOps existaient bien avant que le terme ne
+						soit inventé...<br />
+						Mais ce terme à la mode a permis de renouveler et de diffuser cette pratique. Ce terme est aussi lié avec
+						de nouveau outils mais GitOps ne veut pas dire nécessairement nouveaux outils
+						</aside>
+					</section>
+					<section>
+						<h3>Win</h3>
+						<br />
+						<a href="#/6">Aller à l'épreuve 2</a>
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<!-- 6 -->
+				<section data-background-image="images/richardson-kubecon-2.png" data-background-size="60%">
+					<section>
+						<h3>Quelles sont les 2 principes fondamentaux de GitOps ?</h3>
+						<p>
+							<ul>
+								<li><a href="#/6/1">A: Le principe, c'est de faire des valeurs</a></li>
+								<li><a href="#/6/1">B: On ne passe les commandes Git qu'en ligne de commande</a></li>
+								<li><a href="javascript:void(0)" onclick="resolveAndGo('#/6/2', 1, 1)">C: Git est la seul source de vérité</a></li>
+								<li><a href="#/6/1">D: Chaque branche Git correspond à un environnement différent</a></li>
+								<li><a href="javascript:void(0)" onclick="resolveAndGo('#/6/3', 1, 1)">E: Tout est décrit via du code versionné</a></li>
+								<li><a href="#/6/1">F: Le monde se divise en deux catégories : ceux qui ont un pistolet chargé et ceux qui creusent. Toi, tu creuses. ⛏️</a></li>
+							</ul>
+						</p>
+						<br />
+						<a href="#/7">Aller à l'épreuve 3</a>
+						<aside class="notes">
+							C & E permet d’opérer l’infrastructure en modifiant le code versionné dans Git
+						</aside>
+					</section>
+					<section>
+						<h3>Fail</h3>
+						<br />
+						<a href="#/6">revenir</a>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>Win</h3>
+						<br />
+						<a href="#/6">revenir</a>
+						<aside class="notes">
+							Quelle est l’outil majoritairement utilisé pour stocker, versioner, auditer et partager du code : git
+						</aside>
+					</section>
+					<section>
+						<h3>Win</h3>
+						<br />
+						<a href="#/6">revenir</a>
+						<aside class="notes">
+							Dans l’IT toutes applications, infrastructures, tests, ... est définie par quelque chose d’interprétable par une machine
+							: donc par du code (et si ce n’est pas le cas pb). Et le YAML c’est aussi du code ;)
+						</aside>
+					</section>
+				</section>
+
+				<!-- 7 -->
+				<section data-background-image="images/richardson-kubecon-2.png" data-background-size="60%">
+					<section>
+						<h3>Qu’est ce qui est décrit dans nos repo Git ?</h3>
+						<p>
+						<ul>
+							<li><a href="#/7/1">Du YAML et rien que du YAML</a></li>
+							<li><a href="javascript:void(0)" onclick="resolveAndGo('#/7/2', 1, 1)">L'état désiré de l’infrastructure</a></li>
+							<li><a href="#/7/1">Des scripts qui mettent à jours l'infrastructure</a></li>
+							<li><a href="#/7/1">Des images de chats en ASCII ART （＞◕ω◕＜）</a></li>
+						</ul>
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>Fail</h3>
+						<a href="#/8">Aller à l'épreuve 4</a>
+						<aside class="notes">
+							Nous exprimons l’état désiré que doivent avoir nos infrastructures sous une forme lisible par une machine.<br />
+							Il y aura donc un outil qui s’assurera que l’état désiré et la réalité de notre SI convergent. Cet outil va être branché
+							sur git. Il pourra être notifié des changements et les récupérer ou aller régulièrement récupérer ces changements.<br />
+							<br />
+							Un script ne pourra pas avoir toutes les combinatoires possible pour passer d'un état à un autre, alors qu'une
+							machine pourra calculer les opération à faire pour passer d'un état à un autre<br />
+							La notion d'état désiré permet en outre de détecter des divergences entre l'état désiré et l'état réel
+						</aside>
+					</section>
+					<section>
+						<h3>Win</h3>
+						<a href="#/8">Aller à l'épreuve 4</a>
+						<aside class="notes">
+							Cela permettra d'avoir un outil qui s’assurera que l’état désiré et la réalité de notre SI convergent. Cet outil va être branché
+							sur git. Il pourra être notifié des changement et les récupérer ou aller régulièrement récupérer ces changements.
+						</aside>
+					</section>
+				</section>
+
+
+				<!-- 8 -->
+				<section data-background-image="images/richardson-kubecon-2.png" data-background-size="60%">
+					<section>
+						<h3>Est ce que je peux opérer mon infrastructure sans passer par Git ?</h3>
+						<p>
+							<ul>
+								<li><a href="javascript:void(0)" onclick="resolveAndGo('#/8/2', 1, 1)">Le monde se divise en deux catégories : ceux qui ont un pistolet chargé et ceux qui creusent. Toi, tu creuses ta tombe si tu touches à la main à l'infra.</a></li>
+								<li><a href="#/8/1">Bien sur, I am Groot</a></li>
+							</ul>
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>Fail</h3>
+						<a href="#/9">Aller au moment d'échange post meetup</a>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>Win</h3>
+						<a href="#/9">Aller au moment d'échange post meetup</a>
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<!-- 9 -->
+				<section data-background-image="images/tavern.png" data-background-size="80%">
+					<section>
+						<h3>Au final GitOps c'est...</h3>
+						<img src="images/gitops-ring.png" /><br />
+						Un repo pour les gouverner tous. Un repo pour les détailler. Un repo pour les amener tous et dans kube les
+						déployer....<br />
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>La taverne</h3>
+						Vous vous attabler avec Gimli et Legolas, 🍻<br />
+						Vous leurs demander de l'aide pour mettre en place GitOps dans votre projet <br />
+						<ul>
+							<li><a href="#/10">Legolas vous propose son arme favorite : Argo CD</a></li>
+							<li><a href="#/11">Alors que Gimli vous conseil d'utiliser votre forge pour faire votre arme sur mesure</a></li>
+						</ul>
+						<br />
+						<br />
+						Dans tous les cas, Merlin vous rejoint et vous offre un cluster kube pour pouvoir déployer.
+						
+						<aside class="notes">
+							(Merlin a créer le cluster) <br />
+							Maintenant il va falloir choisir l'outil ou créer l'outil. Plusieurs solutions possible : utiliser Argo CD ou créer sont propre outils
+						</aside>
+					</section>
+				</section>
+
+				<!-- 10 -->
+				<section>
+					<section>
+						<h3>Argo CD</h3>
+						<blockquote style="margin-top: 0; margin-bottom: 0; align-content: center;">
+							<p style="margin-top: 0">Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.</p>
+							<img src="images/argocd_architecture.png" style="margin-bottom: 0;"/>
+						</blockquote>
+						https://argoproj.github.io/cd
+						<aside class="notes">
+						Donné à la CNCF depuis 2 ans, en status incubator<br />
+						Repos github avec environ 7.000 stars et 1700 forks<br />
+						En plus de Argo CD il y a plusieurs projets "Argo"=> Workflow : moteur de worflow; Rollout: deployement en blue-green,
+						canary, ...; Events : event driven workflow
+						</aside>
+					</section>
+					<section data-background-image="images/des.png" data-background-size="60%">
+						<h3>Votre première mission</h3>
+						<br />
+						<ul>
+							<li>Installer et configurer Argo CD</li>
+							<li>S'assurer que la cmdline fonctionne</li>
+							<li>S'assurer que l'interface web est accessible au travers d'un Ingress</li>
+						</ul><br />
+						<br />
+						<a href="javascript:void(0)" onclick="resolveAndGo('#/12', 1, 3)">Attaquer la prochaine épique</a>
+
+						<aside class="notes">
+							Pour la démo tout sera fait en local et l'on aura un seul cluster kube qui hébergera Argo CD et les déployements
+						</aside>
+					</section>
+					
+				</section>
+
+				<!-- 11 -->
+				<section>
+					<section>
+						<h3>Script dans GitLab</h3>
+						<aside class="notes">
+						</aside>
+					</section>
+
+					<section data-background-image="images/des.png" data-background-size="60%">
+						<h3>Votre première mission</h3>
+						<br />
+						<ul>
+							<li>Installer et configurer GitLab pour piloter le cluster</li>
+							<li>S'assurer que les agents fonctionnent</li>
+						</ul><br />
+						<br />
+						<a href="javascript:void(0)" onclick="resolveAndGo('#/12', 1, 3)">Attaquer la prochaine épique</a>
+					
+						<aside class="notes">
+							Pour la démo tout sera fait en local et l'on aura un seul cluster kube qui hébergera GitLab et les déployements
+						</aside>
+					</section>
+				</section>
+
+				<!-- 12 -->
+				<section>
+					<section>
+						<h3>Déployer la prod depuis la branche main</h3>
+						// question de repo dédié aux déployements
+						// commencer par un simple manifest
+						<aside class="notes">
+						</aside>
+					</section>
+				</section>
+
+				<!-- 13 -->
+				<section>
+					<section>
+						<h3>Déployer la recette depuis la branche dev</h3>
+						// comment gérer les différents env ? => notion de 1 seul repo pour tous les envs et surchage soit à la helm soit à la kustomize
+						<br />
+						Aller trouver l'inspiration à la taverne...
+						<aside class="notes">
+						</aside>
+					</section>
+					<section data-background-image="images/tavern.png" data-background-size="80%">
+						<h3>Quelle modèle de configuration par environnement ?</h3>
+						<ul>
+							<li><a href="#/13/2">kustomize, le partis pris de la simplicité</a></li>
+							<li><a href="#/13/3">helm, l'enfer du templating go</a></li>
+						</ul>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>Kustomize</h3>
+						// TODO
+						<aside class="notes">
+						</aside>
+					</section>
+					<section>
+						<h3>Helm</h3>
+						// TODO
+						<aside class="notes">
+						</aside>
+					</section>
+					
+				</section>
+
+				<!-- 14 -->
+				<section>
+					<section data-background-image="images/secret.png" data-background-size="60%">
+						<h3>L'application présente des failles</h3>
+						Entre autre les secrets sont directements dans l'application<br />
+						<aside class="notes">
+						</aside>
+					</section>
+					<section data-background-image="images/tavern.png" data-background-size="80%">
+						<h3>Demander conseil à Merlin</h3>
+						<ul>
+							<li><a href="#/14/2">les "secrets" natifs de kube</a></li>
+							<li><a href="#/14/3">le chiffrage dans Git avec bitnami sealed secrets</a></li>
+							<li><a href="#/14/4">la solution la plus avancé : Hashicorp Vault</a></li>
+						</ul>
+						<aside class="notes">
+						</aside>
+					</section>
+					<section data-background-image="images/secret.png" data-background-size="60%">
+						<h3>Kubernetes "Secret"</h3>
+						Facile mais pas secure du tout
+						<aside class="notes">
+						</aside>
+					</section>
+					<section data-background-image="images/secret.png" data-background-size="60%">
+						<h3>Sealed Secrets</h3>
+						Moyen
+						https://github.com/bitnami-labs/sealed-secrets
+						<aside class="notes">
+						</aside>
+					</section>
+					<section data-background-image="images/secret.png" data-background-size="60%">
+						<h3>Hashicorp Vault</h3>
+						// TODO expliquer ce qui doit être fait
+						<br />
+						<a href="#14">revenir en arrière</a>
+						<aside class="notes">
+							Mais pas le temps/level de mettre cela en place, retour à la case départ en ayant perdu un peu de temps
+						</aside>
+					</section>
+
+				</section>
+
+				<!-- 15 -->
+				<section>
+					<h3>Déployer la prod sur un tag au lieu de HEAD</h3>
+					<aside class="notes">
+					</aside>
+				</section>
+
+
+				<!-- -->
+				<section>
+					<h3>Références</h3>
+					<ul>
+						<li>...</li>
+						<li>Repos du code <br/ > ...</li>
+						<li>Présentation online <br/ > ... </li>
+						<li>...</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+
+			Reveal.initialize({
+				hash: true,
+				autoPlayMedia: true,
+
+				history: true,
+
+				width: 1400,
+				height: 800,
+
+				// Factor of the display size that should remain empty around
+				// the content
+				margin: 0.04,
+
+				// Bounds for smallest/largest possible scale to apply to content
+				minScale: 0.2,
+				maxScale: 2.0,
+
+				// Slide number "speaker" : speaker view | "all"
+				progress: "all",
+				slideNumber: 'c/t',
+				showSlideNumber: 'all',
+
+				// 17:30 max sur les slides => 2:00 sur les questions (sur dernier slides) => 19:30
+				totalTime: 1170,
+				
+				// pdf all fragments in the same page
+				pdfSeparateFragments: false,
+				pdfMaxPagesPerSlide: 1,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealHighlight, RevealNotes ]
+			});
+
+		</script>
+		<script type="text/javascript" src="js/level.js"></script>
+		<script type="text/javascript" src="js/timer.js"></script>
+	</body>
+</html>
