@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 02-kustomize-prod
+  namespace: argocd
+spec:
+  destination:
+    namespace: demo02-kustomize-prod
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: demo02/overlays/production
+    repoURL: 'https://github.com/louiznk/argo-test.git'
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

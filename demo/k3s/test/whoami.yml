@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+  labels:
+    app: traefiklabs
+    name: whoami
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: traefiklabs
+      task: whoami
+  template:
+    metadata:
+      labels:
+        app: traefiklabs
+        task: whoami
+    spec:
+      containers:
+        - name: whoami
+          image: traefik/whoami
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+
+spec:
+  ports:
+    - name: http
+      port: 80
+  selector:
+    app: traefiklabs
+    task: whoami
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`whoami.127.0.0.1.sslip.io`)
+      services:
+        - name: whoami
+          port: 80
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`whoami.127.0.0.1.sslip.io`)
+      services:
+        - name: whoami
+          port: 80
+  tls: {}
+
