@@ -12,8 +12,9 @@ Concernant les images, elles proviennent de :
 - twitter.png : twitter
 - gitops-ring.png : ?
 - secret.png : ?
-- balrog.png : Warner Bros (https://www.warnerbros.com/movies/lord-rings-fellowship-ring)
+- balrog.png : Warner Bros (https://www.warnerbros.com/movies/lord-rings-fellowship-ring) et ou New Line Cinema
 - erebor.pnb : Kornus6 https://twitter.com/Kornux6
+- frodo-in-rivendell.png : Warner Bros et ou New Line Cinema
 - louis.png : Zenika
 - des.png : Louis Tounayre (libre de droits)
 - google.png : Louis Tournayre (libre de droits)

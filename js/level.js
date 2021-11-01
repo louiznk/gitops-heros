@@ -3,6 +3,7 @@ let storyPoints = 0
 
 const labelContainer = document.getElementById("label-container")
 const labelLevel = document.getElementById("label-level")
+const finalScore = document.getElementById("final-score")
 
 function resolveAndGo(link, issuesResolved, difficulty) {
     resolve(issuesResolved, difficulty)
@@ -25,10 +26,11 @@ function resolve(issuesResolved, difficulty) {
         }, 2000);
     }
 
-    console.log("Total issues :" + issues + ", total storyPoints :" + storyPoints)
-
-    labelContainer.innerHTML = "Level :" + getLevel(storyPoints) + " (issues :" + issues + ", points :" + storyPoints + ")"
+    labelContainer.innerHTML = `Level : ${newLevel} (issues : ${issues}, points : ${storyPoints})`
     labelContainer.className = 'show header-inner';
+
+    finalScore.innerHTML = `Félicitation, vous avez résolue ${issues} issues et ${storyPoints} story points<br \>Vous êtes finissez l'aventure avec le niveau ${newLevel}`
+
 }
 
 // fib like...
