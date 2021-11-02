@@ -27,7 +27,8 @@ runners:
 
   ## Specify the tags associated with the runner. Comma-separated list of tags.
   ## - Documentation: https://docs.gitlab.com/ce/ci/runners/#using-tags
-  tags: kubernetes,cluster
+  #tags: kubernetes,cluster
+  runUntagged: true
 
   ## Run all containers with the privileged flag enabled
   ## This will allow the docker:dind image to run if you need to run Docker

@@ -12,11 +12,18 @@ else
 fi
 
 
+EXIST=$(helm ls -n gitlab-managed-apps | grep "gitlab-runner" | wc -l)
+if [ "x$EXIST" = "x1" ]
+then
+    echo "deleting the runner already installed for update"
+    helm delete gitlab-runner -n gitlab-managed-apps
+fi
+
 if [ -z "$1" ]
 then
     echo "install avec les valeurs par défaut dans le values.yaml"
-    helm install --namespace gitlab-managed-apps gitlab-runner -f values.yaml gitlab/gitlab-runner
+    helm install --create-namespace --namespace gitlab-managed-apps gitlab-runner -f values.yaml gitlab/gitlab-runner
 else
     echo "install et surchage le token du repo gitlab"
-    helm install --namespace gitlab-managed-apps gitlab-runner -f values.yaml --set "runnerRegistrationToken=$1" gitlab/gitlab-runner
+    helm install --create-namespace --namespace gitlab-managed-apps gitlab-runner -f values.yaml --set "runnerRegistrationToken=$1" gitlab/gitlab-runner --wait
 fi
