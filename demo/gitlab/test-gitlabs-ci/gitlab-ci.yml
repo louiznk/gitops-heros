@@ -1,0 +1,41 @@
+.kubectl:  
+  image: louiznk/kubectl:1.21
+  before_script:
+  - |
+    mkdir -p ${HOME}/.kube
+    mv ${KUBECONFIG_FILE} ${HOME}/.kube/config
+    kubectl version
+    kubectl get pod
+
+
+stages: 
+#- hello 
+- man
+- pipeline-on-tags
+
+#yo: 
+#  stage: hello 
+#  script: 
+#    - echo "👋 Hello 🌍 from Default"
+#    - env
+#    - ls -la ~
+
+gourth:
+  stage: man 
+  extends: .kubectl
+  script: 
+    - echo "👋 olleH 🌍 from Kubectl"
+    - env
+    - ls -la ~
+    - kubectl get pod
+
+on-tags:
+  stage: pipeline-on-tags
+  image: alpine:latest
+  script: echo "👋 Tag 🌍 from Alpine"
+  only:
+    - tags
+    - main
+  except:
+    - branches
+

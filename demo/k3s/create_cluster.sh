@@ -64,9 +64,9 @@ echo "CoreDNS is Ready"
 # Typo in toleration...
 echo "****************************************************************************************************"
 echo "Set taint and label (if not done)"
-kubectl taint nodes "k3d-${clustername}-server"  node-role.kubernetes.io/master=effect:NoSchedule
-kubectl label node "k3d-${clustername}-server" kubernetes.io/role=master
-kubectl label node "k3d-${clustername}-agent-0" node-role.kubernetes.io/worker=worker
+kubectl taint nodes "k3d-$clustername-server-0"  node-role.kubernetes.io/master=effect:NoSchedule
+kubectl label node "k3d-$clustername-server-0" kubernetes.io/role=master
+kubectl label node "k3d-$clusternam-agent-0" node-role.kubernetes.io/worker=worker
 
 echo "****************************************************************************************************"
 echo "Add traefik v2"
