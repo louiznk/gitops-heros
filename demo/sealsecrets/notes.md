@@ -70,6 +70,7 @@ Option --scope qui permet de rendre les secrets réutilisable dans d'autres name
 ```
       --scope string                     Set the scope of the sealed secret: strict, namespace-wide, cluster-wide (defaults to strict). Mandatory for --raw, otherwise the 'sealedsecrets.bitnami.com/cluster-wide' and 'sealedsecrets.bitnami.com/namespace-wide' annotations on the input secret can be used to select the scope. (default "strict")
 ```
+voir https://dev.to/stack-labs/store-your-kubernetes-secrets-in-git-thanks-to-kubeseal-hello-sealedsecret-2i6h
 
 #### Notes helm :
 
@@ -167,3 +168,4 @@ bar⏎
 Voir https://faun.pub/sealing-secrets-with-kustomize-51d1b79105d8
 
 
+Secret sera a monter dans /etc/sith/secret

@@ -1,32 +1,54 @@
-.kubectl:  
-  image: louiznk/kubectl:1.21
+.kubeconfig:
+  image: louiznk/k8s-tools:1.0.0
   before_script:
   - |
     mkdir -p ${HOME}/.kube
     mv ${KUBECONFIG_FILE} ${HOME}/.kube/config
-    kubectl version
-    kubectl get pod
 
+.kubectl:
+  extends: .kubeconfig
+  script:
+  - |
+    kubectl version
+    kubectl cluster-info
+
+.helm:
+  extends: .kubeconfig
+  script:
+  - |
+    helm version
+
+.kustomize:
+  extends: .kubeconfig
+  script:
+  - |
+    kustomize version
+
+.kubeseal:
+  extends: .kubeconfig
+  script:
+  - |
+    kubeseal --version
 
 stages: 
-#- hello 
+- hello 
 - man
 - pipeline-on-tags
 
-#yo: 
-#  stage: hello 
-#  script: 
-#    - echo "👋 Hello 🌍 from Default"
-#    - env
-#    - ls -la ~
+yo: 
+  stage: hello
+  extends: .kubeconfig
+  script: 
+    - echo "👋 Check all"
+    - kubectl version
+    - kustomize version
+    - kubeseal --version 
 
 gourth:
   stage: man 
   extends: .kubectl
   script: 
-    - echo "👋 olleH 🌍 from Kubectl"
-    - env
-    - ls -la ~
+    - echo "👋 Hello 🌍 from Kubectl"
     - kubectl get pod
 
 on-tags:
@@ -38,4 +60,3 @@ on-tags:
     - main
   except:
     - branches
-

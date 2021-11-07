@@ -7,16 +7,18 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`argocd.127.0.0.1.sslip.io`)
+      match: Host(`argocd.$IP.sslip.io`)
       priority: 10
       services:
         - name: argocd-server
+          namespace: argocd
           port: 80
     - kind: Rule
-      match: Host(`argocd.127.0.0.1.sslip.io`) && Headers(`Content-Type`, `application/grpc`)
+      match: Host(`argocd.$IP.sslip.io`) && Headers(`Content-Type`, `application/grpc`)
       priority: 11
       services:
         - name: argocd-server
+          namespace: argocd
           port: 80
           scheme: h2c
   tls: {}

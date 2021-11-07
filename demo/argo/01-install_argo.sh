@@ -10,7 +10,15 @@ echo "--------------------------------------------------------------------------
 
 ## 
 kubectl create namespace argocd
-kubectl apply -n argocd -f 0-install-2.1.5.yml -f 1-ingress.yml
+kubectl apply -n argocd -f 0-install-2.1.5.yml 
+
+if [ ! -z "$IP" ]
+then
+    cat 1-ingress.tpl | envsubst | kubectl apply -n argocd -f -
+    echo "Installation de l'ingress route ... rappel https"
+else
+    echo "Quelle est l'ip du cluster ? export IP=..."
+fi
 # version avec le --insecure
 
 ## test 

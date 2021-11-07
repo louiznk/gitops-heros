@@ -8,10 +8,10 @@ spec:
   project: default 
   destination:
     namespace: 01-static-yaml
-    server: https://kubernetes.default.svc      
+    server: https://kubernetes.default.svc
   source:        
     path: demo01
-    repoURL: https://github.com/louiznk/argo-test.git    
+    repoURL: https://github.com/louiznk/argo-test.git
     targetRevision: main
   syncPolicy:
     automated:
