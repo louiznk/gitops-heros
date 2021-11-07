@@ -9,7 +9,7 @@ spec:
     namespace: demo02-kustomize-prod
     server: 'https://kubernetes.default.svc'
   source:
-    path: demo02/overlays/production
+    path: 02-kustomize/overlays/production
     repoURL: 'https://github.com/louiznk/argo-test.git'
     targetRevision: main
   project: default

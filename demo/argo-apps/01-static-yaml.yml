@@ -10,7 +10,7 @@ spec:
     namespace: 01-static-yaml
     server: https://kubernetes.default.svc
   source:        
-    path: demo01
+    path: 01-static-yaml
     repoURL: https://github.com/louiznk/argo-test.git
     targetRevision: main
   syncPolicy:

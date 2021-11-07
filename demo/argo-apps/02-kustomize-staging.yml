@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: demo02/overlays/staging
+    path: 02-kustomize/overlays/staging
     repoURL: https://github.com/louiznk/argo-test.git
     targetRevision: dev
   syncPolicy:
