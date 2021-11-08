@@ -88,27 +88,39 @@ kind: SealedSecret
 metadata:
   name: {{ include "balrog.fullname" . }}
   annotations:
-    # this is because the name is a deployment time parameter
-    # consider also using "cluster-wide" if the namespace is also a parameter
-    # please make sure you understand the implications, see README
     sealedsecrets.bitnami.com/namespace-wide: "true"
   labels:
-    app.kubernetes.io/name: {{ include "balrog.name" . }}
-    helm.sh/chart: {{ include "balrog.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-type: Opaque
+    {{- include "balrog.labels" . | nindent 4 }}
 spec:
+  encryptedData:
+    foo: {{ .Values.sealedSecret.secretFoo }}
   template:
     metadata:
+      name: mon-secret
       labels:
-        app.kubernetes.io/name: {{ include "balrog.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/managed-by: {{ .Release.Service }}
-  encryptedData:
-    secret: {{  with .Values.secretsFoo }}
+        {{- include "balrog.labels" . | nindent 8 }}
+
 ```
 
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: mypod
+    image: busybox
+    volumeMounts:
+    - name: secret-volume
+      mountPath: "/etc/secrets"
+      readOnly: true
+  volumes:
+  - name: secret-vlume
+    secret:
+      secretName: mon-secret
+```
 
 Fichier values.yaml
 ```yaml

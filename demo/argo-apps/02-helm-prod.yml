@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: helm-dev
+  namespace: argocd
+spec:
+  destination:
+    namespace: demo02-helm-dev
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: 02-helm
+    repoURL: 'https://github.com/louiznk/argo-test.git'
+    targetRevision: dev
+    helm:
+      valueFiles:
+        - values-staging.yaml
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
