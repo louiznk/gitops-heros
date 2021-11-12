@@ -2,14 +2,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kustomize-prod
+  name: kustomize-secret
   namespace: argocd
 spec:
   destination:
-    namespace: kustomize-prod
+    namespace: kustomize-secret
     server: 'https://kubernetes.default.svc'
   source:
-    path: 02-kustomize/overlays/production
+    path: 02-kustomize/overlays/secret
     repoURL: 'https://github.com/louiznk/argo-test.git'
     targetRevision: main
   project: default

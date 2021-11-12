@@ -2,12 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo01
+  name: hello-world
   namespace: argocd
 spec:
   project: default 
   destination:
-    namespace: 01-static-yaml
+    namespace: test
     server: https://kubernetes.default.svc
   source:        
     path: 01-static-yaml

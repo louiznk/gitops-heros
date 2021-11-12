@@ -1,4 +1,8 @@
 #!/bin/bash
+set -
+DIR=$(dirname "$0")
+pushd $DIR
+
 echo "****************************************************************************************************"
 echo "Before you need to manually install k3d, kubectl and helm (we assume you have docker and git)"
 echo "First install k3d v3.0.0"
@@ -28,8 +32,11 @@ clustername=$1
 echo "****************************************************************************************************"
 #echo "Create the cluster v1.16"
 # v0.8.1 (1.14) OK - v0.9.1 (1.15) KO - v0.10.0 (1.16) KO - v1.0.0 (1.16 avec localstorage, metricserver)??
-#--image "docker.io/rancher/k3s:0.8.1" \
+#--image rancher/k3s:v1.20.10-k3s1
 mkdir -p "$HOME/srv/k3d/${clustername}"
+
+echo "🏗️ Creating the cluster"
+set -x
 k3d cluster create "${clustername}" --port "80:80@server[0]" --port "443:443@server[0]" \
 --servers 1 \
 --agents 1 \
@@ -38,11 +45,15 @@ k3d cluster create "${clustername}" --port "80:80@server[0]" --port "443:443@ser
 --k3s-agent-arg  '--kubelet-arg=eviction-hard=imagefs.available<1%,nodefs.available<1%' --k3s-agent-arg  '--kubelet-arg=eviction-minimum-reclaim=imagefs.available=1%,nodefs.available=1%' \
 --no-lb ${REGISTRY} \
 --volume "$HOME/srv/k3d/${clustername}/default:/opt/local-path-provisioner/default" \
+--image rancher/k3s:v1.20.10-k3s1 \
 --wait
 
 export KUBECONFIG="$(k3d kubeconfig merge ${clustername})"
-kubectl version
 
+kubectl version
+kubectl cluster-info
+
+{ set +x; } 2> /dev/null # silently disable xtrace
 # Install calico (instead of flannel)
 if [ "$CNI" ]; then
     echo "Install Calico as CNI"
@@ -51,7 +62,7 @@ fi
 
 
 ## wait for coredns
-echo "Waiting for CoreDNS to be ready"
+echo "⏳ Waiting for CoreDNS to be ready"
 kubectl wait deployment coredns -n kube-system --timeout=-1s --for condition=available
 while [ "1" != $(kubectl get deployment coredns -n kube-system -o=custom-columns=READY:.status.readyReplicas --no-headers) ]
 do
@@ -61,19 +72,24 @@ done
 echo " "
 echo "CoreDNS is Ready"
 
-# Typo in toleration...
 echo "****************************************************************************************************"
 echo "Set taint and label (if not done)"
 kubectl taint nodes "k3d-$clustername-server-0"  node-role.kubernetes.io/master=effect:NoSchedule
 kubectl label node "k3d-$clustername-server-0" kubernetes.io/role=master
-kubectl label node "k3d-$clusternam-agent-0" node-role.kubernetes.io/worker=worker
+kubectl label node "k3d-$clustername-agent-0" node-role.kubernetes.io/worker=worker
 
 echo "****************************************************************************************************"
-echo "Add traefik v2"
+echo "🚦 Install Traefik 2.5"
+set -x
 kubectl apply -f ./traefik/ --wait
+{ set +x; } 2> /dev/null # silently disable xtrace
 
+IP='127.0.0.1'
+echo "📮 IP du cluster $IP"
 
-echo "Waiting for Traefik to be ready"
+../apps-repos/change-ip.sh $IP
+
+echo "⏳ Waiting for Traefik to be ready"
 kubectl wait deployment traefik-ingress-controller -n kube-system --timeout=-1s --for condition=available
 while [ "1" != $(kubectl get deployment traefik-ingress-controller -n kube-system -o=custom-columns=READY:.status.readyReplicas --no-headers) ]
 do
@@ -82,3 +98,5 @@ do
 done
 echo " "
 echo "Traefik is ready, open http://localhost/dashboard/"
+
+popd

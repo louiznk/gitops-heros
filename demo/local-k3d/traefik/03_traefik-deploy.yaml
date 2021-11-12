@@ -31,6 +31,7 @@ spec:
       - image: traefik:v2.5
         name: traefik-ingress-lb
         args:
+          - --api
           - --api.dashboard
           - --accesslog
           - --entrypoints.web.address=:80
@@ -40,6 +41,7 @@ spec:
           - --providers.kubernetescrd
           - --providers.file.filename=/etc/traefik/custom_conf.yml
           - --providers.kubernetesingress
+          - --providers.kubernetesingress.ingressendpoint.publishedservice=kube-system/traefik-ingress-controller
         ports:
           # - name: ssh
           #   containerPort: 22

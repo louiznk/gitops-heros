@@ -93,7 +93,7 @@ metadata:
     {{- include "balrog.labels" . | nindent 4 }}
 spec:
   encryptedData:
-    foo: {{ .Values.sealedSecret.secretFoo }}
+    foo: {{ .Values.sealedSecrets.secretFoo }}
   template:
     metadata:
       name: mon-secret

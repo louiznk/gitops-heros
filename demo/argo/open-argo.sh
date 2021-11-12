@@ -1,5 +1,4 @@
 #!/bin/bash
-echo "Login to argocd"
 
 if [ -z "$IP" ]
 then
@@ -15,11 +14,4 @@ then
     fi
 fi
 
-set -x
-argocd login \
-    --insecure \
-    --username admin \
-    --grpc-web \
-    argocd.$IP.sslip.io
-
-
+chromium https://argocd.$IP.sslip.io > /dev/null

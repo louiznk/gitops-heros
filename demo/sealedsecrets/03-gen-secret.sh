@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+txtrst=$(tput sgr0) # Text reset
+txtred=$(tput setaf 1) # Red
+txtblu=$(tput setaf 4) # Blue
+
+if [ "$#" -ne 4 ]; then
+  echo "Usage: $0 <secret-name> <namespace> <clef> <value>" >&2
+  exit 1
+fi
+DIR=$(dirname "$0")
+pushd $DIR
+echo "👮 Generate secret $3=$4"
+#echo "kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3=$4 -o yaml "
+
+set -x
+kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml | \
+kubeseal --format yaml --cert public-cert.pem > sealedsecret-strict.yaml
+
+kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml | \
+kubeseal --format yaml --scope namespace-wide --cert public-cert.pem > sealedsecret-namespace-wide.yaml
+
+kubectl create secret generic $1 --dry-run=client --from-literal=$3="$4" -o yaml | \
+kubeseal --format yaml --scope cluster-wide --cert public-cert.pem > sealedsecret-cluster-wide.yaml
+
+{ set +x; } 2> /dev/null # silently disable xtrace
+
+echo "🔐 ${txtblu}Generate secrets in $(pwd)${txtrst}"
+echo " - Strict         : sealedsecret-strict.yaml"
+echo " - Namespace-wide : sealedsecret-namespace-wide.yaml"
+echo " - Cluster-wide   : sealedsecret-cluster-wide.yaml"
+popd
+

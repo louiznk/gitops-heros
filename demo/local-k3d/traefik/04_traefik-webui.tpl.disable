@@ -18,7 +18,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: traefik.<NODE_IP>.nip.io
+  - host: traefik.$IP.sslip.io
     http:
       paths:
       - path: /

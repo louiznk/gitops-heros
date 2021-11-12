@@ -25,6 +25,7 @@ function resolve(issuesResolved, difficulty) {
             labelLevel.className = 'hide lvl-up';
         }, 2000);
     }
+    // TODO lvl down
 
     labelContainer.innerHTML = `Level : ${newLevel} (issues : ${issues}, points : ${storyPoints})`
     labelContainer.className = 'show header-inner';
