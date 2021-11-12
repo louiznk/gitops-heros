@@ -818,10 +818,16 @@
 					</section>
 					<section data-background-image="images/secret.png" data-background-size="60%">
 						<h3>Hashicorp Vault</h3>
-						<br />
 						<p>
-							Il y a 3 grandes approches pour utiliser Vault : 
-							<ul>
+							On peut utiliser Vault depuis notre l'endroit qui déploie grace à :
+							<ul class="small">
+								<li>Du templating</li>
+								<li>Des commandes impératifs</li>
+							</ul>
+						</p>
+						<p>
+							Ou encore depuis le cluster où les secrets sont utilisés via :
+							<ul class="small">
 								<li>Init/SideCar Containers</li>
 								<li>Intégrer un client Vault dans l'application</li>
 								<li>Utiliser "Secrets Store CSI driver" de kube</li>

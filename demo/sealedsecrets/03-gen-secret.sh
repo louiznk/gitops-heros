@@ -10,22 +10,28 @@ if [ "$#" -ne 4 ]; then
 fi
 DIR=$(dirname "$0")
 pushd $DIR
+
+if [ ! -f public-cert.pem ]; then
+  echo "🪲 You need the public cert first, I do it for you lucky boy"
+  ./02-get-public-cert.sh
+fi
+
 echo "👮 Generate secret $3=$4"
 #echo "kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3=$4 -o yaml "
-
+mkdir -p generated
 set -x
 kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml | \
-kubeseal --format yaml --cert public-cert.pem > sealedsecret-strict.yaml
+kubeseal --format yaml --cert public-cert.pem > ./generated/sealedsecret-strict.yaml
 
 kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml | \
-kubeseal --format yaml --scope namespace-wide --cert public-cert.pem > sealedsecret-namespace-wide.yaml
+kubeseal --format yaml --scope namespace-wide --cert public-cert.pem > ./generated/sealedsecret-namespace-wide.yaml
 
 kubectl create secret generic $1 --dry-run=client --from-literal=$3="$4" -o yaml | \
-kubeseal --format yaml --scope cluster-wide --cert public-cert.pem > sealedsecret-cluster-wide.yaml
+kubeseal --format yaml --scope cluster-wide --cert public-cert.pem > ./generated/sealedsecret-cluster-wide.yaml
 
 { set +x; } 2> /dev/null # silently disable xtrace
 
-echo "🔐 ${txtblu}Generate secrets in $(pwd)${txtrst}"
+echo "🔐 ${txtblu}Generate secrets in $(pwd)/generated/${txtrst}"
 echo " - Strict         : sealedsecret-strict.yaml"
 echo " - Namespace-wide : sealedsecret-namespace-wide.yaml"
 echo " - Cluster-wide   : sealedsecret-cluster-wide.yaml"
