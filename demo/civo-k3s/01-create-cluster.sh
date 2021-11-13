@@ -12,7 +12,7 @@ echo "🏗️ Creating the cluster"
 set -x
 
 # using existing firewall
-civo k3s create merlin-cluster --remove-applications=Traefik --existing-firewall merlin-firewall --version "1.21.2+k3s1" --size "g3.k3s.medium" --nodes 2 --wait --save --yes
+civo k3s create merlin-cluster --remove-applications=Traefik --existing-firewall merlin-firewall --version "1.21.2+k3s1" --size "g3.k3s.medium" --nodes 2 --wait --save --merge --yes
 
 #civo kubernetes create merlin-cluster --size "g3.k3s.medium" --nodes 2 -r "Traefik" --region "LON1" --wait --save --yes 
 

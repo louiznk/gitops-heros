@@ -27,7 +27,12 @@ done
 
 shift $((OPTIND-1))
 
-clustername=$1
+if [ "x$1" == "" ]
+then
+  clustername="gitops"
+else
+  clustername=$1
+fi
 # --volume "$(pwd)/registries/k3s-config/registries.yaml:/etc/rancher/k3s/registries.yaml"
 echo "****************************************************************************************************"
 #echo "Create the cluster v1.16"

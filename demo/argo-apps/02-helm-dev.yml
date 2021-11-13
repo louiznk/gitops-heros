@@ -9,8 +9,8 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: 02-helm
-    repoURL: 'https://github.com/louiznk/argo-test.git'
-    targetRevision: dev
+    repoURL: 'https://github.com/louiznk/deploy-sith.git'
+    targetRevision: main
     helm:
       valueFiles:
         - values-staging.yaml

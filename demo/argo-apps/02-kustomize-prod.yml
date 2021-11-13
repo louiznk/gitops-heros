@@ -10,7 +10,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: 02-kustomize/overlays/production
-    repoURL: 'https://github.com/louiznk/argo-test.git'
+    repoURL: 'https://github.com/louiznk/deploy-sith.git'
     targetRevision: main
   project: default
   syncPolicy:
