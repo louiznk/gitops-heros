@@ -20,14 +20,13 @@ echo "👮 Generate secret $3=$4"
 #echo "kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3=$4 -o yaml "
 mkdir -p generated
 set -x
-kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml | \
-kubeseal --format yaml --cert public-cert.pem > ./generated/sealedsecret-strict.yaml
+kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml > ./generated/secret.yaml
 
-kubectl create secret generic $1 -n $2 --dry-run=client --from-literal=$3="$4" -o yaml | \
-kubeseal --format yaml --scope namespace-wide --cert public-cert.pem > ./generated/sealedsecret-namespace-wide.yaml
+kubeseal --format yaml --cert public-cert.pem < ./generated/secret.yaml > ./generated/sealedsecret-strict.yaml
 
-kubectl create secret generic $1 --dry-run=client --from-literal=$3="$4" -o yaml | \
-kubeseal --format yaml --scope cluster-wide --cert public-cert.pem > ./generated/sealedsecret-cluster-wide.yaml
+kubeseal --format yaml --scope namespace-wide --cert public-cert.pem < ./generated/secret.yaml > ./generated/sealedsecret-namespace-wide.yaml
+
+kubeseal --format yaml --scope cluster-wide --cert public-cert.pem < ./generated/secret.yaml > ./generated/sealedsecret-cluster-wide.yaml
 
 { set +x; } 2> /dev/null # silently disable xtrace
 
