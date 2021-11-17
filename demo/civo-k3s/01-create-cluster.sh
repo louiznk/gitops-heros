@@ -13,17 +13,30 @@ echo "🏗️ Creating the cluster"
 set -x
 
 # using existing firewall
-civo k3s create merlin-cluster --remove-applications=Traefik --existing-firewall merlin-firewall --size "g3.k3s.medium" --nodes 2 --wait --save --merge --yes
+civo k3s create merlin-cluster --remove-applications=Traefik --existing-firewall merlin-firewall --size "g3.k3s.medium" --nodes 2 --wait --save --yes
 
 #civo kubernetes create merlin-cluster --size "g3.k3s.medium" --nodes 2 -r "Traefik" --region "LON1" --wait --save --yes 
 
 #civo k3s create merlin-cluster --version "1.21.2+k3s1" --size "g3.k3s.medium" --nodes 1 --region "LON1" -r "Traefik" --remove-applications="Traefik" --remove-applications "Traefik" --wait --save --yes
+
+#civo kubernetes config merlin-cluster > ${HOME}/.kubeclusters/kube-config-merlin.yaml
+## export KUBECONFIG=${HOME}/.kubeclusters/kube-config-merlin.yaml
+
+civo kubernetes config merlin-cluster > kube-config-merlin.yaml
+
+kubectl konfig merge /home/louis/.k3d/kubeconfig-gitops.yaml $(pwd)/kube-config-merlin.yaml -p > ~/.kube/config
+
+kubectl ctx merlin-cluster
+
+export KUBECONFIG=$(pwd)/kube-config-merlin.yaml
+
+# need krew install ctx
+#kubectl ctx merlin-cluster
+
 kubectl version
 kubectl cluster-info
 
-civo kubernetes config merlin-cluster > ${HOME}/.kubeclusters/kube-config-merlin.yaml
 
-## export KUBECONFIG=${HOME}/.kubeclusters/kube-config-merlin.yaml
 
 ## Don't use traefik 2.3 -a "Traefik-v2" (missing right for argocd)
 # <!> for using custom traefik => uninstall helm traefik before `helm uninstall traefik -n kube-system`
@@ -49,7 +62,7 @@ kubectl apply -f ./traefik/ --wait
 IP=$(cat ${HOME}/.kubeclusters/kube-config-merlin.yaml | yq eval '.clusters.[0].cluster.server' - | cut -d'/' -f3 | cut -d":" -f1)
 echo "📮 IP du cluster $IP"
 
-../apps-repos/change-ip.sh $IP
+echo "Call ../apps-repos/change-ip.sh $IP"
 
 # Remove this...
 helm ls -n kube-system 2>/dev/null
