@@ -92,6 +92,19 @@
 				transform: translate(-50%, -50%);
 				font-size: 200%;
 			}
+			.lvl-down {
+				position: absolute;
+				box-sizing: border-box;
+				top: 20%;
+				left: 50%;
+				text-align: center;
+				transform: translate(-50%, -50%);
+				font-size: 200%;
+			}
+			.score {
+				color: rgb(250, 250, 250);
+				font-size: 1.1em;
+			}
 		</style>
 	</head>
 	<body>
@@ -102,7 +115,7 @@
 			</div>
 			<div class="slides">
 
-				<div id="label-level" class="lvl-up hide">🆙</div>
+				<div id="label-level" class="hide">XX</div>
 
 				<!-- 0 -->
 				<section>
@@ -314,14 +327,16 @@
 					<section>
 						<h3>Fail</h3>
 						<br />
-						<a href="#/6">revenir</a>
+						<a href="#/6">revenir</a> ou 
+						<a href="#/7">aller à l'épreuve 3</a>
 						<aside class="notes">
 						</aside>
 					</section>
 					<section>
 						<h3>Win</h3>
 						<br />
-						<a href="#/6">revenir</a>
+						<a href="#/6">revenir</a> ou 
+						<a href="#/7">aller à l'épreuve 3</a>
 						<aside class="notes">
 							Quelle est l’outil majoritairement utilisé pour stocker, versioner, auditer et partager du code : git
 						</aside>
@@ -329,7 +344,8 @@
 					<section>
 						<h3>Win</h3>
 						<br />
-						<a href="#/6">revenir</a>
+						<a href="#/6">revenir</a> ou 
+						<a href="#/7">aller à l'épreuve 3</a>
 						<aside class="notes">
 							Dans l’IT toutes applications, infrastructures, tests, ... est définie par quelque chose d’interprétable par une machine
 							: donc par du code (et si ce n’est pas le cas pb). Et le YAML c’est aussi du code ;)
@@ -494,7 +510,7 @@
 				<!-- 12 -->
 				<section>
 					<section>
-						<h3>Déployer en production depuis la branche main</h3>
+						<h3>Déployer en production des descripteurs versionnés</h3>
 						<br />
 						Allons nous enfin pouvoir <a href="#/12/1">déployer la production à partir du repository git</a> ? 🤞
 						<aside class="notes">
@@ -537,7 +553,7 @@
 					<section data-background-image="images/tavern.png" data-background-size="80%">
 						<h3>Quel modèle de configuration pour gérer nos différents environnements ?</h3>
 						<br />
-						Après avoir offert plusieurs 🍺 au barde, il vous compte l'histoire de :
+						Après avoir offert plusieurs 🍺 au barde, il vous propose de suivre la voie de :
 						<br />
 						<p>
 							<ul>
@@ -875,10 +891,10 @@ metadata:
 
 				<!-- 16 -->
 				<section data-background-image="images/frodo-in-rivendell.png" data-background-size="70%">
-					<h3>Questions ?</h3>
+					<h3>Fin du premier tome</h3>
 					<br />
 					Merci à vous 🤗
-					<div id="final-score"></div>
+					<div id="final-score" class="score">Mais vous devriez recommencer car rien n'est en production</div>
 				</section>
 
 				<!-- 17 -->

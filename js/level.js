@@ -19,10 +19,19 @@ function resolve(issuesResolved, difficulty) {
 
     if (lastLevel < newLevel) {
         // level up
+        labelLevel.innerHTML = '💪🆙'
         labelLevel.className = 'show lvl-up';
         labelContainer.className = 'show header-inner'
         setTimeout(function () {
             labelLevel.className = 'hide lvl-up';
+        }, 2000);
+    } else if (lastLevel > newLevel) {
+        // level down
+        labelLevel.innerHTML = '🤢🔽'
+        labelLevel.className = 'show lvl-down';
+        labelContainer.className = 'show header-inner'
+        setTimeout(function () {
+            labelLevel.className = 'hide lvl-down';
         }, 2000);
     }
     // TODO lvl down
