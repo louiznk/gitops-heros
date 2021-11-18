@@ -19,9 +19,9 @@ echo "Get public cert for sealing secret"
 # waiting...
 echo "⏳ Waiting for public cert"
 while [ "" == "$(kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o json | jq -r '.items[] | has("kind")')" ]; do echo -n "."; sleep 1; done
+echo " ✅"
 
-PWD=$(pwd)
-echo "📦 Save public cert in ${txtblu}${PWD}public-cert.pem${txtrst}"
+echo "📦 Save public cert in ${txtblu}$(pwd)/public-cert.pem${txtrst}"
 set -x
 kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o jsonpath="{.items[0].data['tls\.crt']}" | base64 -d > public-cert.pem 
 

@@ -9,8 +9,7 @@ pushd $DIR
 
 echo "Get public cert for sealing secret"
 
-PWD=$(pwd)
-echo "📦 Save public cert in ${txtblu}${PWD}public-cert.pem${txtrst}"
+echo "📦 Save public cert in ${txtblu}$(pwd)/public-cert.pem${txtrst}"
 set -x
 kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o jsonpath="{.items[0].data['tls\.crt']}" | base64 -d > public-cert.pem 
 

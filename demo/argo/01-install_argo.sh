@@ -76,7 +76,7 @@ do
   sleep 1
   HTTP_STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" -k https://argocd.$IP.sslip.io)
 done
-echo ""
+echo " ✅"
 
 set -x
 argocd login \

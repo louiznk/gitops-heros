@@ -1,5 +1,5 @@
 #!/bin/bash
-set -
+set -e
 DIR=$(dirname "$0")
 pushd $DIR
 
@@ -11,7 +11,10 @@ else
 fi
 clustername="$name-cluster"
 
+set -x
 civo kubernetes config $clustername | sed "s/server:.*/server: https:\/\/kubernetes.default:443/g" > kubeconfig.local
+{ set +x; } 2> /dev/null # silently disable xtrace
+
 echo "Create kubeconfig for local runner in kubeconfig.local\n"
 xclip -sel clip < kubeconfig.local
 

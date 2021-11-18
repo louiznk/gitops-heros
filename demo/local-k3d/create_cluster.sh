@@ -74,7 +74,7 @@ do
     printf "."
     sleep 1
 done
-echo " "
+echo " ✅"
 echo "CoreDNS is Ready"
 
 echo "****************************************************************************************************"
@@ -101,7 +101,7 @@ do
     printf "."
     sleep 1
 done
-echo " "
+echo " ✅"
 echo "Traefik is ready, open http://localhost/dashboard/"
 
 popd

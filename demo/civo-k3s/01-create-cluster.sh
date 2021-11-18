@@ -32,6 +32,8 @@ civo kubernetes config ${clustername} > kube-config-$name.yaml
 
 kubectl konfig merge /home/louis/.k3d/kubeconfig-gitops.yaml $(pwd)/kube-config-$name.yaml -p > ~/.kube/config
 
+chmod 600 ~/.kube/config
+
 kubectl ctx ${clustername}
 
 export KUBECONFIG=$(pwd)/kube-config-$name.yaml
@@ -56,7 +58,7 @@ do
     printf "."
     sleep 1
 done
-echo " "
+echo " ✅"
 echo "CoreDNS is Ready"
 
 
@@ -81,5 +83,5 @@ do
     printf "."
     sleep 1
 done
-
+echo " ✅"
 popd
