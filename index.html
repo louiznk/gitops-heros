@@ -134,18 +134,19 @@
 				<!-- 1 -->
 				<section>
 					<img src="images/twitter.png" style="margin: 0;" /><span style="font-size: 1.2em;"> @_louidji</span>
-					<table class="small">
+					<table>
 						<tbody>
 							<tr>
 								<td><img src="images/louis.png" class="img-rounded aligncenter avatar"/></td>
 							</tr>
 							<tr>
-								<td>Louis Tournayre @ Zenika Lyon</td>
+								<td style="text-align: center;">Louis Tournayre @ Zenika Lyon &\<br />GDG Cloud & IoT Lyon</td>
 							</tr>
 						</tbody>
 					</table>
 					<br>
 					<aside class="notes">
+						J'aurai le plaisir d'être le MJ de cette partie de Dev And Ops
 					</aside>
 				</section>
 				<!-- 2 -->
@@ -153,12 +154,17 @@
 					<h3>Notre histoire commence par une crise...</h3>
 					<img src="images/404.png" />
 					<br />
+					<!-- variante 
+					Il était une fois le vaste royaume de <b>Kubernetes</b>, dans ce royaume existé un petit namespace qui avait pour
+						capitale
+						<b>le site</b> (et pas le sith)<br />.
+					-->
 					Il était une fois une application que nous appellerons <b>le site</b> (et pas le sith)<br />
 					<br />
 					Mais ce site est défectueux, les utilisateurs ne sont pas contents, la direction est inquiète...<br />
 					
 					<aside class="notes">
-						Et pire que tout on a déjà déployer le thème d'halloween après halloween, on a pas le droit de faire pareil pour le thème de Noël.<br />
+						En plus les dernières mise en production se sont très mal passées, car pire que tout on a déployer le thème d'halloween après halloween, on a pas le droit de faire pareil pour le thème de Noël.<br />
 						C'est la crise !
 						<br/ >
 						La direction attends des idées et propositions pour améliorer les choses.<br />
@@ -485,7 +491,7 @@
 				<!-- 11 -->
 				<section>
 					<section>
-						<h3>Script dans GitLab</h3>
+						<h3>Du "sur mesure" avec la CI de GitLab</h3>
 						<aside class="notes">
 						</aside>
 					</section>
@@ -496,7 +502,7 @@
 						<ul>
 							<li>Installer et configurer un runner GitLab pour dans le cluster</li>
 							<li>S'assurer que le runner fonctionne</li>
-							<li>Permettre au runner de se connecter à l'API Server</li>
+							<li>Permettre au runner de piloter le cluster k8s</li>
 						</ul><br />
 						<br />
 						<a href="javascript:void(0)" onclick="resolveAndGo('#/12', 1, 4)">Après avoir résolu cette issue, passer à la prochaine</a>
@@ -520,13 +526,12 @@
 					<section data-background-image="images/des.png" data-background-size="50%">
 						<h3>Go to prod un vendredi 😱 ?</h3>
 						<br />
-						L'équipe dev vous a fournit les manifests pour déployer la nouvelle version de l'application dans la nouvelle infrastructure.<br />
+						L'équipe dev vous a fournit les manifests pour déployer l'Application dans la nouvelle infrastructure.<br />
 						<br />
 						<a href="javascript:void(0)" onclick="resolveAndGo('#/13', 1, 3)">Après avoir résolu cette issue, passer à la prochaine</a>
 						
 						<aside class="notes">
-							Pour la démo tout sera fait en local et l'on aura un seul cluster kube qui hébergera GitLab et les déployements<br />
-							Si version gitlab il faudra ajouter les scripts prévu pour...
+							
 						</aside>
 					</section>
 
@@ -564,7 +569,8 @@
 						<br />
 						Qui sera votre modèle ?
 						<aside class="notes">
-							Vous êtes sûr Public ?
+							Kustomize est un guerrier Nain légendaire par sa détermination et ses principes. Il déteste le templating qu'il considère comme non conforme à l'esprit de kube.<br />
+							A contrario, il y aussi le célèbre et démoniaque Helm qui a le templating qui fait partie de son âme, de son être.
 						</aside>
 					</section>
 					<!-- 13/2 -->
@@ -598,31 +604,30 @@
 						<br />
 						Contenant les définitions de "base" et le(s) patch(s) de chaque environnement<br />
 						<pre>
-							<code data-line-numbers="4-5|6-8|9-12|21-22|19-20,23-24">
-								<script type="text/template">
-								---
-								# base kustomize.yml file
-								apiVersion: kustomize.config.k8s.io/v1beta1
-								kind: Kustomization
-								commonLabels:
-									app: kustomize
-									version: demo02
-								resources:
-								- deployment.yml
-								- svc.yml
-								- ingress.yml
+							<code data-line-numbers="2-4|5-7|8-11|14,20-21|18-19,22-23">
+								<script type="text/template">---
+# base kustomize.yml file
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+	app: kustomize
+	version: demo02
+resources:
+- deployment.yml
+- svc.yml
+- ingress.yml
 
-								---
-								# overlay kustomize.yml file for moria env
-								apiVersion: kustomize.config.k8s.io/v1beta1
-								kind: Kustomization
-								namespace: moria
-								commonLabels:
-									env: moria
-								bases:
-								- ../../base
-								patchesStrategicMerge:
-								- patch.yml
+---
+# overlay kustomize.yml file for moria env
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: moria
+commonLabels:
+	env: moria
+bases:
+- ../../base
+patchesStrategicMerge:
+- patch.yml
 								</script>
 							</code>
 						</pre>
@@ -687,86 +692,86 @@
 						<section data-background-image="images/balrog.png" data-background-size="77%">
 							<h3>Helm</h3>
 							<pre>
-								<code data-line-numbers="1-3|30,34|53|30,36-37,40|78">
-									<script type="text/template">
-										## Chart.yaml file
-										apiVersion: v2
-										name: balrog
-										description: A Helm chart for Kubernetes
+								<code data-line-numbers="2-4|29,30,34,36,37,40|44-46,53|78">
+									<script type="text/template">---
+## Chart.yaml file
+apiVersion: v2
+name: balrog
+description: A Helm chart for Kubernetes
 
-										# A chart can be either an 'application' or a 'library' chart.
-										#
-										# Application charts are a collection of templates that can be packaged into versioned archives
-										# to be deployed.
-										#
-										# Library charts provide useful utilities or functions for the chart developer. They're included as
-										# a dependency of application charts to inject those utilities and functions into the rendering
-										# pipeline. Library charts do not define any templates and therefore cannot be deployed.
-										type: application
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
 
-										# This is the chart version. This version number should be incremented each time you make changes
-										# to the chart and its templates, including the app version.
-										# Versions are expected to follow Semantic Versioning (https://semver.org/)
-										version: 0.1.0
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
 
-										# This is the version number of the application being deployed. This version number should be
-										# incremented each time you make changes to the application. Versions are not expected to
-										# follow Semantic Versioning. They should reflect the version the application is using.
-										# It is recommended to use it with quotes.
-										appVersion: "1.16.0"
-										
-										---
-										## values.yaml file
-										# Default values for balrog.
-										# This is a YAML-formatted file.
-										# Declare variables to be passed into your templates.
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "1.16.0"
 
-										replicaCount: 1
+---
+## values.yaml file
+# Default values for balrog.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
-										image:
-										repository: registry.acdc.song/highway/to-hell
-										pullPolicy: IfNotPresent
-										# Overrides the image tag whose default is the chart appVersion.
-										tag: "666"
-										# ...
+replicaCount: 1
 
-										---
-										## deployement.yml file
-										apiVersion: apps/v1
-										kind: Deployment
-										metadata:
-										name: {{ include "balrog.fullname" . }}
-										labels:
-											{{- include "balrog.labels" . | nindent 4 }}
-										spec:
-										{{- if not .Values.autoscaling.enabled }}
-										replicas: {{ .Values.replicaCount }}
-										{{- end }}
-										selector:
-											matchLabels:
-											{{- include "balrog.selectorLabels" . | nindent 6 }}
-										template:
-											metadata:
-											{{- with .Values.podAnnotations }}
-											annotations:
-												{{- toYaml . | nindent 8 }}
-											{{- end }}
-											labels:
-												{{- include "balrog.selectorLabels" . | nindent 8 }}
-											spec:
-											{{- with .Values.imagePullSecrets }}
-											imagePullSecrets:
-												{{- toYaml . | nindent 8 }}
-											{{- end }}
-											serviceAccountName: {{ include "balrog.serviceAccountName" . }}
-											securityContext:
-												{{- toYaml .Values.podSecurityContext | nindent 8 }}
-											containers:
-												- name: {{ .Chart.Name }}
-												securityContext:
-													{{- toYaml .Values.securityContext | nindent 12 }}
-												image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-										# ...
+image:
+	repository: registry.acdc.song/highway/to-hell
+	pullPolicy: IfNotPresent
+	# Overrides the image tag whose default is the chart appVersion.
+	tag: "666"
+# ...
+
+---
+## deployement.yml file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: {{ include "balrog.fullname" . }}
+labels:
+	{{- include "balrog.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+replicas: {{ .Values.replicaCount }}
+{{- end }}
+selector:
+	matchLabels:
+	{{- include "balrog.selectorLabels" . | nindent 6 }}
+template:
+	metadata:
+	{{- with .Values.podAnnotations }}
+	annotations:
+		{{- toYaml . | nindent 8 }}
+	{{- end }}
+	labels:
+		{{- include "balrog.selectorLabels" . | nindent 8 }}
+	spec:
+	{{- with .Values.imagePullSecrets }}
+	imagePullSecrets:
+		{{- toYaml . | nindent 8 }}
+	{{- end }}
+	serviceAccountName: {{ include "balrog.serviceAccountName" . }}
+	securityContext:
+		{{- toYaml .Values.podSecurityContext | nindent 8 }}
+	containers:
+		- name: {{ .Chart.Name }}
+		securityContext:
+			{{- toYaml .Values.securityContext | nindent 12 }}
+		image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+# ...
 
 									</script>
 								</code>
@@ -847,7 +852,7 @@ metadata:
 					<section data-background-image="images/secret.png" data-background-size="60%">
 						<h3>Hashicorp Vault</h3>
 						<p>
-							On peut utiliser Vault depuis notre l'endroit qui déploie grace à :
+							On peut utiliser Vault depuis l'endroit qui déploie grace à :
 							<ul class="small">
 								<li>Du templating</li>
 								<li>Des commandes impératifs</li>
