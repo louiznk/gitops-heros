@@ -1,7 +1,7 @@
 #!/bin/bash
 # TODO see size g3.k3s.large"
 # --remove-applications=Traefik 
-#civo kubernetes create merlin-cluster --size "g3.k3s.medium" --nodes 2 --create-firewall "" --wait --save --region LON1
+#civo kubernetes create ${clustername} --size "g3.k3s.medium" --nodes 2 --create-firewall "" --wait --save --region LON1
 # the --version "1.21.2+k3s1" doesn't work... using the older with Traefik 2.5 (manual)
 # -a "Traefik-v2" 
 # --version "1.21.2+k3s1"
@@ -12,26 +12,32 @@ pushd $DIR
 echo "🏗️ Creating the cluster"
 set -x
 
+if [ "x$1" == "x" ]
+then
+  name="gandalf"
+else
+  name=$1
+fi
+clustername="$name-cluster"
+
 # using existing firewall
-civo k3s create merlin-cluster --remove-applications=Traefik --existing-firewall merlin-firewall --size "g3.k3s.medium" --nodes 2 --wait --save --yes
+civo k3s create ${clustername} --remove-applications=Traefik --existing-firewall kube-firewall --size "g3.k3s.medium" --nodes 2 --wait --save --yes
 
-#civo kubernetes create merlin-cluster --size "g3.k3s.medium" --nodes 2 -r "Traefik" --region "LON1" --wait --save --yes 
+#civo kubernetes create ${clustername} --size "g3.k3s.medium" --nodes 2 -r "Traefik" --region "LON1" --wait --save --yes 
 
-#civo k3s create merlin-cluster --version "1.21.2+k3s1" --size "g3.k3s.medium" --nodes 1 --region "LON1" -r "Traefik" --remove-applications="Traefik" --remove-applications "Traefik" --wait --save --yes
+#civo k3s create ${clustername} --version "1.21.2+k3s1" --size "g3.k3s.medium" --nodes 1 --region "LON1" -r "Traefik" --remove-applications="Traefik" --remove-applications "Traefik" --wait --save --yes
 
-#civo kubernetes config merlin-cluster > ${HOME}/.kubeclusters/kube-config-merlin.yaml
-## export KUBECONFIG=${HOME}/.kubeclusters/kube-config-merlin.yaml
 
-civo kubernetes config merlin-cluster > kube-config-merlin.yaml
+civo kubernetes config ${clustername} > kube-config-$name.yaml
 
-kubectl konfig merge /home/louis/.k3d/kubeconfig-gitops.yaml $(pwd)/kube-config-merlin.yaml -p > ~/.kube/config
+kubectl konfig merge /home/louis/.k3d/kubeconfig-gitops.yaml $(pwd)/kube-config-$name.yaml -p > ~/.kube/config
 
-kubectl ctx merlin-cluster
+kubectl ctx ${clustername}
 
-export KUBECONFIG=$(pwd)/kube-config-merlin.yaml
+export KUBECONFIG=$(pwd)/kube-config-$name.yaml
 
 # need krew install ctx
-#kubectl ctx merlin-cluster
+#kubectl ctx ${clustername}
 
 kubectl version
 kubectl cluster-info
@@ -59,7 +65,7 @@ set -x
 kubectl apply -f ./traefik/ --wait
 
 { set +x; } 2> /dev/null # silently disable xtrace
-IP=$(cat ${HOME}/.kubeclusters/kube-config-merlin.yaml | yq eval '.clusters.[0].cluster.server' - | cut -d'/' -f3 | cut -d":" -f1)
+IP=$(cat kube-config-$name.yaml | yq eval '.clusters.[0].cluster.server' - | cut -d'/' -f3 | cut -d":" -f1)
 echo "📮 IP du cluster $IP"
 
 echo "Call ../apps-repos/change-ip.sh $IP"

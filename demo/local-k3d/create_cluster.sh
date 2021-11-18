@@ -27,7 +27,7 @@ done
 
 shift $((OPTIND-1))
 
-if [ "x$1" == "" ]
+if [ "x$1" == "x" ]
 then
   clustername="gitops"
 else
